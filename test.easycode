@@ -1,0 +1,64 @@
+{-
+
+    dans CMD: 
+
+    1. flex easycode.l
+    2. ajouter: #include <stdio.h>   
+                #include <stdlib.h>
+                #include <string.h>
+                extern int fileno(FILE *stream);
+        dans le fichier lex.yy.c généré par flex pour eviter les erreurs
+    3. bison -d easycode.y
+    4. gcc -std=c99 -o easycode_compil easycode.tab.c lex.yy.c symbol_table.c -lfl
+    5. easycode_compil test.easycode
+-}
+
+
+DEBUT
+        --Déclaration des variables ##
+
+        -- NUM : Agkfeokekffe ; -> error length ##
+        -- NUM : age; -> error majuscule ##
+        -- NUM: Tableau[-2346] ; -> erreur taille negative ## 
+
+        NUM : Age;
+        REAL : Salaire ; 
+        FIXE NUM : MAX_AGE = 65;
+        NUM: Tableau[2346] ;
+        NUM : Compteur;
+
+        {-
+            commentaire
+            multi ligne
+        -}
+
+    EXECUTION {
+
+        -- Age <- -6; -> on peut affecter des val negative ##
+        
+        
+        Age <- 18;
+
+        -- affiche("Message."); -> error ';' ##
+
+
+        affiche("Message.") --affiche de string marche##
+
+        affiche(Age) --affiche d'un id marche ##
+
+        lire(Age)
+
+        SI (Age < MAX_AGE) ALORS {
+            affiche("Vous pouvez encore travailler.")
+        } SINON {
+            affiche("Vous etes en age de retraite.")
+        }
+
+        Compteur <- 0;
+
+        TANTQUE (Compteur < 5) FAIRE {
+            affiche("Compteur TANTQUE : ", Compteur) --affiche string + id marche ##
+            Compteur <- Compteur + 1;
+        }
+    }
+FIN
